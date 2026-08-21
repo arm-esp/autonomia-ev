@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Autonomía EV · 108 kWh</title>
+<title>Autonomía IX3 · 108 kWh</title>
 <style>
   :root{
     --bg:#0B1220;
@@ -14,7 +14,8 @@
     --accent2:#3266AD;
     --warn:#D85A30;
   }
-  *{box-sizing:border-box;}
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html{ -webkit-text-size-adjust:100%; }
   body{
     margin:0;
     background:var(--bg);
@@ -23,51 +24,56 @@
     min-height:100vh;
     display:flex;
     justify-content:center;
-    padding:32px 16px;
+    padding:20px 12px 40px;
   }
   .app{
     width:100%;
     max-width:640px;
   }
   header{
-    margin-bottom:20px;
+    margin-bottom:18px;
   }
   .eyebrow{
     text-transform:uppercase;
     letter-spacing:.12em;
-    font-size:11px;
+    font-size:13px;
     color:var(--accent);
-    font-weight:600;
+    font-weight:700;
   }
   h1{
-    font-size:22px;
-    margin:6px 0 2px;
-    font-weight:700;
+    font-size:32px;
+    margin:8px 0 4px;
+    font-weight:800;
+    line-height:1.15;
   }
   .sub{
     color:var(--muted);
-    font-size:13px;
+    font-size:18px;
   }
   .tabs{
     display:flex;
-    gap:4px;
+    gap:6px;
     background:var(--panel);
     border:1px solid var(--line);
-    border-radius:10px;
-    padding:4px;
+    border-radius:14px;
+    padding:6px;
     margin-bottom:16px;
+    position:sticky;
+    top:12px;
+    z-index:10;
   }
   .tab-btn{
     flex:1;
-    padding:10px 12px;
+    padding:16px 10px;
     border:none;
     background:transparent;
     color:var(--muted);
-    font-size:13px;
-    font-weight:600;
-    border-radius:8px;
+    font-size:18px;
+    font-weight:700;
+    border-radius:10px;
     cursor:pointer;
     transition:.15s;
+    -webkit-appearance:none;
   }
   .tab-btn.active{
     background:var(--accent2);
@@ -76,63 +82,128 @@
   .panel{
     background:var(--panel);
     border:1px solid var(--line);
-    border-radius:14px;
-    padding:22px;
+    border-radius:18px;
+    padding:24px 18px;
   }
   .field{
-    margin-bottom:16px;
+    margin-bottom:18px;
   }
   label{
     display:block;
-    font-size:12px;
+    font-size:17px;
     color:var(--muted);
-    margin-bottom:6px;
+    margin-bottom:10px;
+    font-weight:600;
+  }
+  .stepper{
+    display:flex;
+    align-items:stretch;
+    gap:10px;
+  }
+  .step-btn{
+    flex:0 0 64px;
+    background:#0D1626;
+    border:1px solid var(--line);
+    border-radius:14px;
+    color:var(--accent);
+    font-size:32px;
+    font-weight:700;
+    cursor:pointer;
+    -webkit-appearance:none;
+    user-select:none;
+    touch-action:manipulation;
+    line-height:1;
+  }
+  .step-btn:active{
+    background:#16233b;
   }
   input[type=number]{
     width:100%;
-    padding:12px 14px;
+    flex:1;
+    min-width:0;
+    padding:18px 12px;
     background:#0D1626;
     border:1px solid var(--line);
-    border-radius:8px;
+    border-radius:14px;
     color:var(--text);
-    font-size:16px;
+    font-size:34px;
+    font-weight:700;
+    text-align:center;
+    -moz-appearance:textfield;
+  }
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button{
+    -webkit-appearance:none;
+    margin:0;
   }
   input[type=number]:focus{
     outline:none;
     border-color:var(--accent);
   }
+  .unit-tag{
+    text-align:center;
+    color:var(--muted);
+    font-size:13px;
+    margin-top:8px;
+  }
+  .quick-grid{
+    display:grid;
+    grid-template-columns:repeat(6, 1fr);
+    gap:8px;
+    margin-top:14px;
+  }
+  .quick-btn{
+    padding:14px 4px;
+    background:#0D1626;
+    border:1px solid var(--line);
+    border-radius:10px;
+    color:var(--text);
+    font-size:17px;
+    font-weight:700;
+    cursor:pointer;
+    touch-action:manipulation;
+  }
+  .quick-btn.active{
+    background:var(--accent2);
+    border-color:var(--accent2);
+    color:#fff;
+  }
+  .quick-btn:active{
+    background:var(--accent2);
+    border-color:var(--accent2);
+  }
   .result{
-    margin-top:18px;
-    padding:18px;
+    margin-top:22px;
+    padding:26px 18px;
     background:#0D1626;
     border:1px solid var(--accent);
-    border-radius:10px;
+    border-radius:16px;
     text-align:center;
   }
   .result .km{
-    font-size:36px;
+    font-size:58px;
     font-weight:800;
     color:var(--accent);
     line-height:1;
   }
   .result .label{
-    font-size:12px;
+    font-size:16px;
     color:var(--muted);
-    margin-top:6px;
+    margin-top:8px;
   }
   .fixed-note{
-    font-size:11px;
+    font-size:14px;
     color:var(--muted);
-    margin-top:10px;
+    margin-top:14px;
     text-align:center;
   }
   table{
     width:100%;
     border-collapse:collapse;
-    font-size:13px;
+    font-size:19px;
   }
   th, td{
-    padding:8px 6px;
+    padding:13px 8px;
     text-align:right;
     border-bottom:1px solid var(--line);
   }
@@ -141,36 +212,50 @@
   }
   th{
     color:var(--muted);
-    font-weight:600;
-    font-size:11px;
+    font-weight:700;
+    font-size:14px;
     text-transform:uppercase;
     letter-spacing:.04em;
+    position:sticky;
+    top:0;
+    background:var(--panel);
   }
-  tr:hover td{
+  td{
+    font-weight:600;
+  }
+  tr:active td{
     background:#0D1626;
   }
   .table-wrap{
-    max-height:520px;
+    max-height:65vh;
     overflow-y:auto;
+    -webkit-overflow-scrolling:touch;
   }
   .bar-cell{
     display:flex;
     align-items:center;
-    gap:8px;
+    justify-content:flex-end;
   }
   .bar{
-    height:6px;
-    border-radius:3px;
+    height:8px;
+    border-radius:4px;
     background:var(--accent2);
+    max-width:70px;
   }
   .hidden{display:none;}
+
+  @media (max-width:380px){
+    h1{font-size:24px;}
+    .result .km{font-size:44px;}
+    input[type=number]{font-size:26px;}
+  }
 </style>
 </head>
 <body>
 <div class="app">
   <header>
     <div class="eyebrow">Batería fija · 108 kWh</div>
-    <h1>Autonomía coche eléctrico</h1>
+    <h1>Autonomía IX3</h1>
     <div class="sub">Calculadora de km según consumo (kWh/100km)</div>
   </header>
 
@@ -182,7 +267,12 @@
   <div id="calc" class="panel">
     <div class="field">
       <label for="consumo">Consumo (kWh / 100 km)</label>
-      <input type="number" id="consumo" value="18" min="1" step="0.1" oninput="calcular()">
+      <div class="stepper">
+        <button type="button" class="step-btn" onclick="ajustar(-0.5)">–</button>
+        <input type="number" inputmode="decimal" id="consumo" value="18" min="1" step="0.5" oninput="calcular()">
+        <button type="button" class="step-btn" onclick="ajustar(0.5)">+</button>
+      </div>
+      <div class="quick-grid" id="quickGrid"></div>
     </div>
     <div class="result">
       <div class="km" id="kmResult">600 km</div>
@@ -217,6 +307,34 @@ function switchTab(tab){
   });
 }
 
+function ajustar(delta){
+  const input = document.getElementById('consumo');
+  let val = parseFloat(input.value) || 0;
+  val = Math.max(1, val + delta);
+  input.value = Math.round(val * 10) / 10;
+  calcular();
+}
+
+function fijar(valor){
+  document.getElementById('consumo').value = valor;
+  calcular();
+}
+
+function buildQuickGrid(){
+  const grid = document.getElementById('quickGrid');
+  let html = '';
+  for(let c=13; c<=30; c++){
+    html += `<button type="button" class="quick-btn" data-val="${c}" onclick="fijar(${c})">${c}</button>`;
+  }
+  grid.innerHTML = html;
+}
+
+function marcarActivo(valor){
+  document.querySelectorAll('.quick-btn').forEach(btn=>{
+    btn.classList.toggle('active', parseFloat(btn.dataset.val) === valor);
+  });
+}
+
 function calcular(){
   const consumo = parseFloat(document.getElementById('consumo').value);
   const bateria = 108;
@@ -227,6 +345,7 @@ function calcular(){
   }
   const km = (bateria / consumo) * 100;
   el.textContent = km.toFixed(0) + ' km';
+  marcarActivo(consumo);
 }
 
 function buildTable(){
@@ -247,6 +366,7 @@ function buildTable(){
   body.innerHTML = rows;
 }
 
+buildQuickGrid();
 calcular();
 buildTable();
 </script>
